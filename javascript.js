@@ -16,97 +16,201 @@ let WINING_COMBINATION =[
     [2,4,6],
 ];
 let circleTurn;
-itemSign.forEach(item =>{
-    item.addEventListener('click',signPicker,false);
-})
-function signPicker(e){
-    restartGame();
-    startGame();
-    itemSignX.classList.remove('highlighted');
-    itemSignO.classList.remove('highlighted');
-    let userSign=e.target;
-    userSign.classList.add('highlighted');
-    if(userSign.textContent==="X"){
-        circleTurn=false;
-        setBoardHoverClass();
+// itemSign.forEach(item =>{
+//     item.addEventListener('click',signPicker,false);
+// })
+// function signPicker(e){
+//     restartGame();
+//     startGame();
+//     itemSignX.classList.remove('highlighted');
+//     itemSignO.classList.remove('highlighted');
+//     let userSign=e.target;
+//     userSign.classList.add('highlighted');
+//     if(userSign.textContent==="X"){
+//         circleTurn=false;
+//         setBoardHoverClass();
 
-    }else{
-        circleTurn=true;
-        setBoardHoverClass();
-    }
-}
+//     }else{
+//         circleTurn=true;
+//         setBoardHoverClass();
+//     }
+// }
 
-function checkWinner(currentClass){
-   return WINING_COMBINATION.some((combination)=>{
-    return combination.every(index=>{
-        return cellElement[index].classList.contains(currentClass)
-    })
-   })
-}
-function startGame(){
-cellElement.forEach(btn=>{
-    btn.addEventListener('click',clickHandler,{once:true})
-})
-}
+// function checkWinner(currentClass){
+//    return WINING_COMBINATION.some((combination)=>{
+//     return combination.every(index=>{
+//         return cellElement[index].classList.contains(currentClass)
+//     })
+//    })
+// }
+// function startGame(){
+// cellElement.forEach(btn=>{
+//     btn.addEventListener('click',clickHandler,{once:true})
+// })
+// }
 
 
-function clickHandler(e){
-    let cell=e.target;
-    let currentClass= circleTurn? "circle": "x";
-    placeMarker(cell,currentClass)
-    if(checkWinner(currentClass)){
-        endGame(false)   
-    }else if (isDraw()){
-        endGame(true)
-    }else{
-        swapTurn();
-        setBoardHoverClass();
-    }
-}
-function isDraw(){
-    return [...cellElement].every(cell =>{
-        return cell.classList.contains("x") || cell.classList.contains("circle")
-    })
-}
-function endGame(draw){
-    if(draw){
-        winingMessage.innerHTML=`Draw!`
-    }else{
-        winingMessage.innerHTML=`${circleTurn?"O's":"X's"} Wins!`
-    }
-    winingMessage.classList.add('show');
-}
+// function clickHandler(e){
+//     let cell=e.target;
+//     let currentClass= circleTurn? "circle": "x";
+//     placeMarker(cell,currentClass)
+//     if(checkWinner(currentClass)){
+//         endGame(false)   
+//     }else if (isDraw()){
+//         endGame(true)
+//     }else{
+//         swapTurn();
+//         setBoardHoverClass();
+//     }
+// }
+// function isDraw(){
+//     return [...cellElement].every(cell =>{
+//         return cell.classList.contains("x") || cell.classList.contains("circle")
+//     })
+// }
+// function endGame(draw){
+//     if(draw){
+//         winingMessage.innerHTML=`Draw!`
+//     }else{
+//         winingMessage.innerHTML=`${circleTurn?"O's":"X's"} Wins!`
+//     }
+//     winingMessage.classList.add('show');
+// }
 
-function placeMarker(cell,currentClass){
-    cell.classList.add(currentClass);
-}
-function swapTurn(){
-    circleTurn=!circleTurn;
-}
+// function placeMarker(cell,currentClass){
+//     cell.classList.add(currentClass);
+// }
+// function swapTurn(){
+//     circleTurn=!circleTurn;
+// }
 
-function setBoardHoverClass(){
-    gameBoard.classList.remove('x');
-    gameBoard.classList.remove('circle');
-    if(circleTurn){
-    gameBoard.classList.add('circle');
-    }else{
-    gameBoard.classList.add('x');
-    }
-}
+// function setBoardHoverClass(){
+//     gameBoard.classList.remove('x');
+//     gameBoard.classList.remove('circle');
+//     if(circleTurn){
+//     gameBoard.classList.add('circle');
+//     }else{
+//     gameBoard.classList.add('x');
+//     }
+// }
 
-restartBtn.addEventListener('click',restartGame)
-function restartGame(){
-    cellElement.forEach(btn=>{
-        btn.removeEventListener('click',clickHandler);
+// restartBtn.addEventListener('click',restartGame);
+// function restartGame(){
+//     cellElement.forEach(btn=>{
+//         btn.removeEventListener('click',clickHandler);
+//         gameBoard.classList.remove('x');
+//         gameBoard.classList.remove('circle');
+//         btn.classList.remove('x');
+//         btn.classList.remove('circle');
+//         winingMessage.classList.remove('show');
+//         winingMessage.textContent="";
+//         itemSign.forEach(item=>{
+//             item.classList.remove("highlighted")
+//         })
+//         circleTurn;
+//     })
+// }
+
+(function essay(){
+    const setBoardHoverClass=()=>{
         gameBoard.classList.remove('x');
         gameBoard.classList.remove('circle');
-        btn.classList.remove('x');
-        btn.classList.remove('circle');
-        winingMessage.classList.remove('show');
-        winingMessage.textContent="";
-        itemSign.forEach(item=>{
-            item.classList.remove("highlighted")
+        if(circleTurn){
+        gameBoard.classList.add('circle');
+        }else{
+        gameBoard.classList.add('x');
+        }
+    }
+    const restartGame=()=>{
+        cellElement.forEach(btn=>{
+            btn.removeEventListener('click',clickHandler);
+            gameBoard.classList.remove('x');
+            gameBoard.classList.remove('circle');
+            btn.classList.remove('x');
+            btn.classList.remove('circle');
+            winingMessage.classList.remove('show');
+            winingMessage.textContent="";
+            itemSign.forEach(item=>{
+                item.classList.remove("highlighted")
+            })
+            circleTurn;
         })
-        circleTurn;
+    }
+    const swapTurn=()=>{
+        circleTurn=!circleTurn;
+    }
+    const placeMarker=(cell,currentClass)=>{
+        cell.classList.add(currentClass);
+    }
+    const endGame=(draw)=>{
+        if(draw){
+            winingMessage.innerHTML=`Draw!`
+        }else{
+            winingMessage.innerHTML=`${circleTurn?"O's":"X's"} Wins!`
+        }
+        winingMessage.classList.add('show');
+    }
+    const isDraw=()=>{
+        return [...cellElement].every(cell =>{
+            return cell.classList.contains("x") || cell.classList.contains("circle")
+        })
+    }
+    const clickHandler=(e)=>{
+        let cell=e.target;
+        let currentClass= circleTurn? "circle": "x";
+        placeMarker(cell,currentClass)
+        if(checkWinner(currentClass)){
+            endGame(false)   
+        }else if (isDraw()){
+            endGame(true)
+        }else{
+            swapTurn();
+            setBoardHoverClass();
+        }
+    }
+    const startGame=()=>{
+        cellElement.forEach(btn=>{
+            btn.addEventListener('click',clickHandler,{once:true})
+        })
+    }
+    const checkWinner=(currentClass)=>{
+        return WINING_COMBINATION.some((combination)=>{
+         return combination.every(index=>{
+             return cellElement[index].classList.contains(currentClass)
+         })
+        })
+     }
+     const signPicker=(e)=>{
+        restartGame();
+        startGame();
+        itemSignX.classList.remove('highlighted');
+        itemSignO.classList.remove('highlighted');
+        let userSign=e.target;
+        userSign.classList.add('highlighted');
+        if(userSign.textContent==="X"){
+            circleTurn=false;
+            setBoardHoverClass();
+    
+        }else{
+            circleTurn=true;
+            setBoardHoverClass();
+        }
+    }
+    itemSign.forEach(item =>{
+        item.addEventListener('click',signPicker,false);
     })
-}
+restartBtn.addEventListener('click',restartGame);
+
+    return {
+        setBoardHoverClass,
+        restartGame,
+        swapTurn,
+        placeMarker,
+        endGame,
+        isDraw,
+        clickHandler,
+        startGame,
+        checkWinner,
+        signPicker,
+    }
+})();
