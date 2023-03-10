@@ -11,12 +11,14 @@ main{
     justify-content: center;
     align-items: center;
     height: 100dvh;
+    background-color:#a21e1ea1;
 }
 .container{
     border: 1px solid #dedcdc;
     border-radius: 10px;
     width: 700px;
     min-width: 400px;
+    background-color:white;
 }
 #level-option{
     border: none;
